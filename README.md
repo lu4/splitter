@@ -94,4 +94,10 @@ file2.txt
 file2.txt.2021-01-22_18:37:41.217706
 ```
 
+The tags are removed from files.
+
 Just copy and paste the test output above to a `test.txt` and run `cat test.txt | splitter.py`
+
+The output processed and echoed for further processing similar to `cat test.txt | splitter.py | grep session`
+
+
