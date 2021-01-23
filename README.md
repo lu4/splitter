@@ -78,6 +78,9 @@ Appending can also be safe in a sense that splitter.py won't mix up
 content between sessions. If a file wasn't created by splitter.py
 even appending operation will preserve original file.
 
+a--->file2.txt
+Only the file produced within current session will be appended.
+
 ```
 
 This would create a set of files similar to the following:
