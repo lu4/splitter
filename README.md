@@ -74,13 +74,8 @@ need to explicitly initialize. You can revise this information after years
 if you save your logs. Just separate your outputs using splitter.py tags.
 
 a--->file2.txt
-This text will append to file2.txt
-
-a--->file2.txt
-This text will append to file2.txt
-
-a--->file2.txt
-This text will append to file2.txt
+Appending can also be safe in a sense that splitter.py won't mix up
+content between sessions if files existed before splitter.py launch.
 
 ```
 
