@@ -28,9 +28,6 @@ for line in sys.stdin:
       name = name.strip(' ')
 
     if mode and name:
-      if f != sys.stdout:
-        f.close()
-
       if mode == 's' or mode == 'S':
         f = sys.stdout
       else:
@@ -52,7 +49,9 @@ for line in sys.stdin:
           files.move_to_end(actual_name)
 
         while max_open_files < len(files):
-          files.popitem(last=False)
+          (filename, descriptor) = files.popitem(last=False)
+
+          descriptor.close()
 
     else:
       f.write(line)
@@ -60,5 +59,6 @@ for line in sys.stdin:
     if f != sys.stdout:
       sys.stdout.write(line)
 
-if f != sys.stdout:
-  f.close()
+while 0 < len(files):
+  files.popitem(last=False)
+
