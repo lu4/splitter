@@ -3,8 +3,10 @@
 import os
 import sys
 from datetime import datetime
+from collections import OrderedDict
 
 names = {}
+files = OrderedDict()
 
 prefix_a = 'a--->'
 prefix_w = 'w--->'
@@ -14,6 +16,7 @@ prefix_W = 'W--->'
 prefix_S = 'S--->'
 
 f = sys.stdout
+max_open_files = 32
 
 for line in sys.stdin:
     name = None
@@ -40,7 +43,17 @@ for line in sys.stdin:
         if mode == 'w' and os.path.exists(actual_name):
           os.rename(actual_name, actual_name + '.dead-since.' + datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f'))
 
-        f = open(actual_name, mode.lower() + '+')
+        f = files.get(actual_name)
+
+        if f is None:
+          f = open(actual_name, mode.lower() + '+')
+          files[actual_name] = f
+        else:
+          files.move_to_end(actual_name)
+
+        while max_open_files < len(files):
+          files.popitem(last=False)
+
     else:
       f.write(line)
 
